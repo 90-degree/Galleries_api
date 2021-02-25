@@ -19,11 +19,13 @@ class GalleriesController extends Controller
         $searchFilterData = $request->searchFilter;
         $authorFilterData = $request->authorFilter;
         $galleriesQuery = Gallery::with('imageUrls:gallery_id,url')
+            ->with('user:id,first_name,last_name')
             ->searchFilter($searchFilterData)
-            ->authorFilter($authorFilterData);
+            ->authorFilter($authorFilterData)
+            ->latest();
         $galleries = $galleriesQuery->paginate(10);
 
-        return response()->json([$galleries]);
+        return response()->json($galleries);
     }
 
     /**
@@ -40,8 +42,9 @@ class GalleriesController extends Controller
             $gallery->imageUrls()->create(['url' => $url]);
         }
         $gallery->imageUrls;
+        $gallery->user;
 
-        return response()->json([$gallery]);
+        return response()->json($gallery);
     }
 
     /**
@@ -54,7 +57,8 @@ class GalleriesController extends Controller
     {
         $gallery = Gallery::findOrFail($id);
         $gallery->imageUrls;
-        return response()->json([$gallery]);
+        $gallery->user;
+        return response()->json($gallery);
     }
 
     /**
@@ -75,7 +79,7 @@ class GalleriesController extends Controller
         }
         $gallery->imageUrls;
 
-        return response()->json([$gallery]);
+        return response()->json($gallery);
     }
 
     /**

@@ -25,7 +25,10 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
         $token = Auth::attempt($credentials);
-        
+        if (!$token) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
         return $this->jsonResponseWithToken($token);
     }
 
@@ -35,6 +38,11 @@ class AuthController extends Controller
         return response()->json([
             'logout' => true
         ]);
+    }
+
+    public function me()
+    {
+        return response()->json(['user' => Auth::user()]);
     }
 
     //helper methodes
