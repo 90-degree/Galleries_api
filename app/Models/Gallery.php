@@ -28,6 +28,7 @@ class Gallery extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    
     /**
      * filters / scopes...
      */

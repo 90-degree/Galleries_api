@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\GalleriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('galleries', [GalleriesController::class, 'store']);
     Route::put('galleries/{id}', [GalleriesController::class, 'update']);
     Route::delete('galleries/{id}', [GalleriesController::class, 'destroy']);
+    Route::post('comments', [CommentsController::class, 'store']);
+    Route::delete('comments/{id}', [CommentsController::class, 'destroy']);
 });
